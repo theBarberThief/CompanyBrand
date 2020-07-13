@@ -55,4 +55,4 @@ def analyser(list):
             leastFrequentWord = word
 
     return leastFrequentWord
-OGList()
+
