@@ -1,7 +1,9 @@
 import codecs
 from WordObject import WordObject
+
+
 def OGList():
-    f = codecs.open('CompanyEN.txt', "r", encoding='utf-8')
+    f = codecs.open('companysamefont.txt', "r", encoding='utf-8')
     text = f.readlines()
     finalList = []
     for line in text:
@@ -18,9 +20,9 @@ def OGList():
         for element in myList:
             final += element + " "
 
-
         finalList.append(myList)
     return finalList
+
 
 def listToString(list):
     str = ""
@@ -28,46 +30,88 @@ def listToString(list):
         str = str + i + " "
     return str
 
+
 def TwoDListtoList(list):
     reallist = []
     for i in list:
-        for j in i :
+        for j in i:
             reallist.append(j)
     return reallist
+
+
 def countWords(list):
     wordList = []
     counter1 = 0
     for i in list:
         wordList.append(WordObject(i))
 
-
         for j in list:
-            if(j.lower() == i.lower()):
-                #remove
+            if (j.lower() == i.lower()):
+                # remove
                 list.remove(j)
-                #increase
+                # increase
                 wordList[counter1].increase(1);
-                print("yuh")
+                #print("yuh")
         counter1 = counter1 + 1
-
+    print("before")
+    wordList = noRepeats(wordList)
+    print("after")
     for i in wordList:
         print(i.returnWord() + str(i.returnNumber()))
     return wordList
-countWords(TwoDListtoList(OGList()))
-#a = WordObject("ayay")
-#print(a.returnWord())
-#print(TwoDListtoList(OGList()))
+
+def noRepeats(list):
+    # secondList = []
+    # for element in list:
+    #     secondList.append(element)
+    #
+    #
+    # for element in list:
+    #     count = 0
+    #     while count < len(secondList):
+    #         if element == secondList[count]:
+    #             continue
+    #         else:
+    #             if element.returnName() == secondList[count].returnName
+
+
+    for element in list:
+        elementPosition = list.index(element) + 1
+        while elementPosition < len(list):
+            if element.returnWord().lower() == list[elementPosition].returnWord().lower():
+                element.increase(list[elementPosition].returnNumber())
+
+                del list[elementPosition]
+            elementPosition +=1
+
+    return list
 
 
 
 
+print(countWords((TwoDListtoList(OGList()))))
 
 
 
 
+def analyser(analyzerlist):
+    listOfWords = []
+    # loops through OG List (getting a list of each line)
+    for items in OGList():
+        # loops through each word in list (each word of a company name)
+        for item in items:
+            # comapres word to the Ultimate Word List
+            for wordObject in analyzerlist:
+                # if equal, adds the word object to a list
+                if item == wordObject.returnWord():
+                    listOfWords.append(wordObject)
 
+    # variable containing leastFrequentWord
+    leastFrequentWord = listOfWords[0]
 
+    # for each word in list of words, compares it to leastfrequentword
+    for word in listOfWords:
+        if word.returnNumber() < leastFrequentWord.returnNumber():
+            leastFrequentWord = word
 
-
-#def wordNumbers (List)
-
+    return leastFrequentWord

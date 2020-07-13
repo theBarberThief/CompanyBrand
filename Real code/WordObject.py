@@ -13,3 +13,9 @@ class WordObject:
 
     def returnWord(self):
         return self.word
+
+    def changeNumber(self, num):
+        self.number = num
+
+    def setName(self, string):
+        self.word = string
