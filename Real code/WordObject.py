@@ -1,14 +1,15 @@
 class WordObject:
     number = 0
     word = ""
+
     def __init__(self, word):
         self.word = word
 
     def increase(self, num):
-        WordObject.number = WordObject.number + num
+        self.number = self.number + num
 
     def returnNumber(self):
-        return WordObject.number
+        return self.number
 
     def returnWord(self):
-        return WordObject.word
+        return self.word

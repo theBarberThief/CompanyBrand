@@ -1,5 +1,5 @@
 import codecs
-import nltk
+from WordObject import WordObject
 def OGList():
     f = codecs.open('CompanyEN.txt', "r", encoding='utf-8')
     text = f.readlines()
@@ -18,7 +18,7 @@ def OGList():
         for element in myList:
             final += element + " "
 
-        print(final)
+
         finalList.append(myList)
     return finalList
 
@@ -28,21 +28,46 @@ def listToString(list):
         str = str + i + " "
     return str
 
-#shit
-def returnNouns(str):
-    Nouns = []
-    sentence = nltk.word_tokenize(str)
-    tagged = nltk.pos_tag(sentence)
-    print(tagged)
-    for word,pos in tagged:
+def TwoDListtoList(list):
+    reallist = []
+    for i in list:
+        for j in i :
+            reallist.append(j)
+    return reallist
+def countWords(list):
+    wordList = []
+    counter1 = 0
+    for i in list:
+        wordList.append(WordObject(i))
 
-        if (pos == 'NNP' or pos == 'NNPS' ):
-            Nouns.append(word)
 
-    print(listToString(Nouns))
-    return Nouns
+        for j in list:
+            if(j.lower() == i.lower()):
+                #remove
+                list.remove(j)
+                #increase
+                wordList[counter1].increase(1);
+                print("yuh")
+        counter1 = counter1 + 1
+
+    for i in wordList:
+        print(i.returnWord() + str(i.returnNumber()))
+    return wordList
+countWords(TwoDListtoList(OGList()))
+#a = WordObject("ayay")
+#print(a.returnWord())
+#print(TwoDListtoList(OGList()))
+
+
+
+
+
+
+
+
+
+
 
 
 #def wordNumbers (List)
-returnNouns("Jackson went to China on a rainy day!")
 
