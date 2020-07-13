@@ -1,6 +1,7 @@
 class WordObject:
     number = 0
     word = ""
+
     def __init__(self, word):
         self.word = word
 

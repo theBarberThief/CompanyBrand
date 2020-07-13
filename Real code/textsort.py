@@ -1,7 +1,10 @@
 import codecs
-import nltk
+
+
 def OGList():
     f = codecs.open('CompanyEN.txt', "r", encoding='utf-8')
+    o = codecs.open('Output.txt', "w+")
+
     text = f.readlines()
     finalList = []
     for line in text:
@@ -18,9 +21,12 @@ def OGList():
         for element in myList:
             final += element + " "
 
-        print(final)
+        o.write(final)
         finalList.append(myList)
+
+    print(finalList)
     return finalList
+
 
 def listToString(list):
     str = ""
@@ -28,21 +34,25 @@ def listToString(list):
         str = str + i + " "
     return str
 
-#shit
-def returnNouns(str):
-    Nouns = []
-    sentence = nltk.word_tokenize(str)
-    tagged = nltk.pos_tag(sentence)
-    print(tagged)
-    for word,pos in tagged:
+def analyser(list):
+    listOfWords = []
+    #loops through OG List (getting a list of each line)
+    for items in OGList():
+        #loops through each word in list (each word of a company name)
+        for item in items:
+            #comapres word to the Ultimate Word List
+            for wordObject in list:
+                #if equal, adds the word object to a list
+                if item == wordObject.returnWord():
+                    listOfWords.append(wordObject)
 
-        if (pos == 'NNP' or pos == 'NNPS' ):
-            Nouns.append(word)
+   #variable containing leastFrequentWord
+    leastFrequentWord = listOfWords[0]
 
-    print(listToString(Nouns))
-    return Nouns
+    #for each word in list of words, compares it to leastfrequentword
+    for word in listOfWords:
+        if word.returnNumber() < leastFrequentWord.returnNumber():
+            leastFrequentWord = word
 
-
-#def wordNumbers (List)
-returnNouns("Jackson went to China on a rainy day!")
-
+    return leastFrequentWord
+OGList()
