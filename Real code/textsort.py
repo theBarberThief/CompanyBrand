@@ -37,23 +37,20 @@ def TwoDListtoList(list):
 def countWords(list):
     wordList = []
     counter1 = 0
-    for i in list:
-        wordList.append(WordObject(i))
-
-
-        for j in list:
+    for i in list:    #goes through list of words(str)
+        wordList.append(WordObject(i)) #add a wordobject of the str in wordlist
+        for j in list: #goes through the list and removes duplicate, counting in wordobject
             if(j.lower() == i.lower()):
-                #remove
+
                 list.remove(j)
-                #increase
                 wordList[counter1].increase(1);
                 print("yuh")
         counter1 = counter1 + 1
 
-    for i in wordList:
+    for i in wordList: #prints wordlist
         print(i.returnWord() + str(i.returnNumber()))
     return wordList
-countWords(TwoDListtoList(OGList()))
+countWords(TwoDListtoList(OGList())) #gets OGlist converts to 1D list, run countwords
 #a = WordObject("ayay")
 #print(a.returnWord())
 #print(TwoDListtoList(OGList()))
