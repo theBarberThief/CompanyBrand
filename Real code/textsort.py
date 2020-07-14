@@ -14,7 +14,8 @@ def OGList():
             if letter.isalnum():
                 word += letter
             else:
-                myList.append(word)
+                if len(word) > 1:
+                    myList.append(word)
                 word = ""
         final = ""
         for element in myList:
@@ -50,7 +51,7 @@ def countWords(list):
                 # remove
                 list.remove(j)
                 # increase
-                wordList[counter1].increase(1);
+                wordList[counter1].increase(1)
                 #print("yuh")
         counter1 = counter1 + 1
     print("before")
@@ -89,15 +90,19 @@ def noRepeats(list):
 
 
 
-print(countWords((TwoDListtoList(OGList()))))
+
 
 
 
 
 def analyser(analyzerlist):
-    listOfWords = []
+
+
+    counter = 1
+    output = codecs.open('Output.txt', "w+", encoding='utf-8')
     # loops through OG List (getting a list of each line)
     for items in OGList():
+        listOfWords = []
         # loops through each word in list (each word of a company name)
         for item in items:
             # comapres word to the Ultimate Word List
@@ -107,11 +112,18 @@ def analyser(analyzerlist):
                     listOfWords.append(wordObject)
 
     # variable containing leastFrequentWord
-    leastFrequentWord = listOfWords[0]
+        if len(listOfWords) > 0:
+            leastFrequentWord = listOfWords[0]
 
-    # for each word in list of words, compares it to leastfrequentword
-    for word in listOfWords:
-        if word.returnNumber() < leastFrequentWord.returnNumber():
-            leastFrequentWord = word
+            # for each word in list of words, compares it to leastfrequentword
+            for word in listOfWords:
+                if word.returnNumber() < leastFrequentWord.returnNumber():
+                    leastFrequentWord = word
 
-    return leastFrequentWord
+            output.write(str(counter) + " " + leastFrequentWord.returnWord()+"\n")
+            counter +=1
+        else:
+            output.write(str(counter) + "Name is empty \n" )
+            counter +=1
+
+analyser(countWords((TwoDListtoList(OGList()))))
