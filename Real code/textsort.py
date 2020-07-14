@@ -108,7 +108,7 @@ def analyser(analyzerlist):
             # comapres word to the Ultimate Word List
             for wordObject in analyzerlist:
                 # if equal, adds the word object to a list
-                if item == wordObject.returnWord():
+                if item.lower() == wordObject.returnWord().lower():
                     listOfWords.append(wordObject)
 
     # variable containing leastFrequentWord
