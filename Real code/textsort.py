@@ -44,19 +44,26 @@ def countWords(list):
     wordList = []
     counter1 = 0
     for i in list:
+
         wordList.append(WordObject(i))
 
-        for j in list:
-            if (j.lower() == i.lower()):
+        for j in wordList:
+            if (j.returnWord().lower() == i.lower()):
                 # remove
-                list.remove(j)
+                #list.remove(j)
                 # increase
-                wordList[counter1].increase(1)
+                #wordList[counter1].increase(1)
                 #print("yuh")
+                j.increase(1)
         counter1 = counter1 + 1
+
+
     print("before")
     wordList = noRepeats(wordList)
     print("after")
+    for thing in wordList:
+        if (thing.returnWord().lower() == "Comtech".lower()):
+            print(thing.returnNumber())
     for i in wordList:
         print(i.returnWord() + str(i.returnNumber()))
     return wordList
