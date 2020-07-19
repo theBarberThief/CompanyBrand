@@ -25,112 +25,32 @@ def OGList():
     return finalList
 
 
-def listToString(list):
-    str = ""
-    for i in list:
-        str = str + i + " "
-    return str
 
+def countWords(botJerry):
 
-def TwoDListtoList(list):
-    reallist = []
-    for i in list:
-        for j in i:
-            reallist.append(j)
-    return reallist
+    print(botJerry)
+    words = {}
 
+    for line in botJerry:
+        for word in line:
+            words[word] = words.get(word, 0) + 1
+    return words
 
-def countWords(list):
-    wordList = []
-    counter1 = 0
-    for i in list:
-
-        wordList.append(WordObject(i))
-
-        for j in wordList:
-            if (j.returnWord().lower() == i.lower()):
-                # remove
-                #list.remove(j)
-                # increase
-                #wordList[counter1].increase(1)
-                #print("yuh")
-                j.increase(1)
-        counter1 = counter1 + 1
-
-
-    print("before")
-    wordList = noRepeats(wordList)
-    print("after")
-    for thing in wordList:
-        if (thing.returnWord().lower() == "Comtech".lower()):
-            print(thing.returnNumber())
-    for i in wordList:
-        print(i.returnWord() + str(i.returnNumber()))
-    return wordList
-
-def noRepeats(list):
-    # secondList = []
-    # for element in list:
-    #     secondList.append(element)
-    #
-    #
-    # for element in list:
-    #     count = 0
-    #     while count < len(secondList):
-    #         if element == secondList[count]:
-    #             continue
-    #         else:
-    #             if element.returnName() == secondList[count].returnName
-
-
-    for element in list:
-        elementPosition = list.index(element) + 1
-        while elementPosition < len(list):
-            if element.returnWord().lower() == list[elementPosition].returnWord().lower():
-                element.increase(list[elementPosition].returnNumber())
-
-                del list[elementPosition]
-            elementPosition +=1
-
-    return list
-
-
-
-
-
-
-
-
-
-def analyser(analyzerlist):
-
-
-    counter = 1
+def analyser():
+    words = countWords(OGList())
+    count = 1
     output = codecs.open('Output.txt', "w+", encoding='utf-8')
-    # loops through OG List (getting a list of each line)
-    for items in OGList():
-        listOfWords = []
-        # loops through each word in list (each word of a company name)
-        for item in items:
-            # comapres word to the Ultimate Word List
-            for wordObject in analyzerlist:
-                # if equal, adds the word object to a list
-                if item.lower() == wordObject.returnWord().lower():
-                    listOfWords.append(wordObject)
+    for line in OGList():
+        if len(line) > 0:
+            leastCommonWord = line[0]
+            lowestFrequency = float("inf")
+            for word in line:
+                frequency = words[word]
+                if frequency < lowestFrequency:
+                    lowestFrequency = frequency
+                    leastCommonWord = word
+            output.write(str(count) + " " + leastCommonWord + "\n")
+            count += 1
 
-    # variable containing leastFrequentWord
-        if len(listOfWords) > 0:
-            leastFrequentWord = listOfWords[0]
 
-            # for each word in list of words, compares it to leastfrequentword
-            for word in listOfWords:
-                if word.returnNumber() < leastFrequentWord.returnNumber():
-                    leastFrequentWord = word
-
-            output.write(str(counter) + " " + leastFrequentWord.returnWord()+"\n")
-            counter +=1
-        else:
-            output.write(str(counter) + "Name is empty \n" )
-            counter +=1
-
-analyser(countWords((TwoDListtoList(OGList()))))
+analyser()
