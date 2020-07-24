@@ -1,41 +1,22 @@
 import codecs
 from WordObject import WordObject
+import re
+import numpy as np
 
-
-def OGList():
+def removeSymbols():
     #opens textfile
     f = codecs.open('CompanyEN.txt', "r", encoding='utf-8')
     text = f.readlines()
     finalList = []
     for line in text:
-
-        myList = []
-        word = ""
-        for letter in line:
-
-            #adds letter to the word
-            if letter.isalnum():
-                word += letter
-
-
-            #creates a new word if not a letter
-            else:
-                #only adds words that are more than 1 letter long
-                if len(word) > 1:
-                    myList.append(word)
-                word = ""
-        final = ""
-        for element in myList:
-            final += element + " "
-
+        myList = list(filter(None, re.split(r'[,.();（）；，&\r\n| ]',line)))
         finalList.append(myList)
     return finalList
 
 
-
 def countWords(inputList):
 
-    print(inputList)
+
 
     #creates keyvalue dictionary
     words = {}
@@ -46,28 +27,26 @@ def countWords(inputList):
     return words
 
 def analyser():
-    words = countWords(OGList())
+    removeSymbols_words = removeSymbols()
+    words = countWords(removeSymbols_words)
     count = 1
     output = codecs.open('Output.txt', "w+", encoding='utf-8')
 
-
-    for line in OGList():
-
-        #makes sure line length is greater than 1
+    for line in removeSymbols_words:
+        # makes sure line length is greater than 1
         if len(line) > 0:
-
-            #sets leastcommonword as first word
-            leastCommonWord = line[0]
-            lowestFrequency = float("inf")
+            # sets leastcommonword as first word
+            least_common_word = line[0]
+            lowest_frequency = float("inf")
             for word in line:
-
-                #checks if frequency is smaller than lowest frequency in the line
+                # checks if frequency is smaller than lowest frequency in the line
                 frequency = words[word]
-                if frequency < lowestFrequency:
-                    lowestFrequency = frequency
-                    leastCommonWord = word
-            output.write(str(count) + " " + leastCommonWord + "\n")
+                if frequency < lowest_frequency:
+                    lowest_frequency = frequency
+                    least_common_word = word
+            output.write(str(count) + " " + least_common_word + "\n")
             count += 1
 
 
 analyser()
+
