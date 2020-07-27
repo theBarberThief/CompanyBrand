@@ -3,38 +3,51 @@ import numpy as np
 import re
 
 def main():
-    companyCount = 0
-    noSymbolList = []
 
+    #number of companies
+    company_count = 0
+
+    #2D List of all the company names without symbols
+    no_symbol_list = []
+
+    #opens textfile
     f = codecs.open('CompanyEN.txt', "r", encoding='utf-8')
+
+
     text = f.readlines()
 
-    wordsset = set()
+    words_set = set()
 
     for line in text:
         
-        companyCount += 1
-        newLine = list(filter(None, re.split(r'[,.();（）；，&\r\n| ]',line)))
+        company_count += 1
 
-       
-        noSymbolList.append(newLine)
+        #removes symbol from the line
+        new_line = list(filter(None, re.split(r'[,.();（）；，&\r\n| ]',line)))
 
-        for word in newLine:
-            wordsset.add(word.lower())
+        #adds the new line to no_symbol_list
+        no_symbol_list.append(new_line)
 
-    resultList = list(wordsset)
-    bow = np.zeros((companyCount, len(resultList)))
+        #adds each word to word set
+        for word in new_line:
+            words_set.add(word.lower())
 
-    changeAll(companyCount, noSymbolList, resultList, bow)
-    columnnAdding(companyCount, noSymbolList, resultList, bow)
+    #turns the word set into a list
+    result_list = list(words_set)
+
+    #creates a matrix with companycount rows, and result list coloumns
+    bow = np.zeros((company_count, len(result_list)))
+
+    changeAll(company_count, no_symbol_list, result_list, bow)
+    columnnAdding(company_count, no_symbol_list, result_list, bow)
 
 
 
 
 
-def getLine(lineNumber, my_noSymbolList):
+def getLine(line_number, my_noSymbolList):
     
-    line = my_noSymbolList[lineNumber]
+    line = my_noSymbolList[line_number]
     return line
 
 
@@ -48,13 +61,13 @@ def changeOneLine(input_list, lineNumber, my_resultList, bow_matrix):
 
 def changeAll(my_companyCount, my_noSymbolList, my_resultList, bow_matrix):
     count = 0
-    print("before")
+
 
     while count < my_companyCount:
         line = getLine(count, my_noSymbolList)
         changeOneLine(line, count, my_resultList, bow_matrix)
         count += 1
-    print("after")
+   
 
 
 def columnnAdding(companyCount, my_noSymbolList, my_resultList, my_bow):
